@@ -1,5 +1,5 @@
 echo off
-cd C:\ABS\cc-disco\client\TestClient\LogFolder-%1-%2\
+cd C:\ABS\TestClient\LogFolder-%1-%2\
 echo Looking for Warning or Error log entries in the CC-DISCO.log and Siemens-Adapter.log files
 echo +++ CC-DISCO +++ 1>  WarningError.log
 grep -E '"Warning"' CC-DISCO.log >> WarningError.log
