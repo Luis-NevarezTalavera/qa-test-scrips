@@ -1,5 +1,5 @@
 echo == Starting Siemens Adapter ==
-cd c:\ABS\cc-disco\
+cd c:\ABS\TestClient\
 copy Siemens-Adapter.log Siemens-Adapter_backup.log
 date /t >  Siemens-Adapter.log
 time /t >> Siemens-Adapter.log

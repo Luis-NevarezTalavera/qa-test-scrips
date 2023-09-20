@@ -1,5 +1,5 @@
 echo == Starting CC DISCO ==
-cd c:\ABS\cc-disco\
+cd c:\ABS\TestClient\
 copy CC-DISCO.log CC-DISCO_backup.log
 date /t >  CC-DISCO.log
 time /t >> CC-DISCO.log
