@@ -1,3 +1,3 @@
 echo Installing DISCO Test Client
-cd C:\ABS\cc-disco\
+cd C:\ABS\TestClient\
 dotnet tool install Abs.CommonCore.Disco.TestClient --global --configfile nuget.config
