@@ -4,7 +4,7 @@ echo saving logs to LogFolder-%1-%2
 cd c:\ABS\TestClient\
 time /t
 echo on
-disco-test-client TestClientRequests\%1 C:\ABS\cc-disco\client\TestClient\ConnectionConfig.json c:\ABS\TestClient\LogFolder-%1-%2
+disco-test-client TestClientRequests\%1 C:\ABS\TestClient\ConnectionConfig.json c:\ABS\TestClient\LogFolder-%1-%2
 echo off
 echo Copying CC-Disco and Siemens Adapter log files to LogFolder-%1-%2
 cd LogFolder-%1-%2\
