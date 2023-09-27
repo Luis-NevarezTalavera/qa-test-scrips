@@ -1,1 +1,1 @@
-type %userprofile%\myGitHubToken.txt | docker login -u LNevarezTalavera --password-stdin ghcr.io/abs-wavesight
+type %userprofile%\myGitHubToken.txt | docker login -u Luis-NevarezTalavera --password-stdin ghcr.io/abs-wavesight
