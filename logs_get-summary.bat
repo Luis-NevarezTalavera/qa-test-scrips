@@ -1,4 +1,4 @@
-echo off
+@echo off
 cd C:\ABS\TestClient\LogFolder-%1-%2\
 echo Starting Summary for Test: %1-%2
 echo ++--- Summary for Test: %1-%2 ---++ >   Summary_%1-%2.log
@@ -24,8 +24,6 @@ echo. >> Summary_%1-%2.log
 echo --- Responses --- >> Summary_%1-%2.log
 echo | set /p="DiscoScheduleResponses: " >> Summary_%1-%2.log
 grep -c "DiscoScheduleResponse Received" TestRun-%1-%2.log >> Summary_%1-%2.log
-echo | set /p="DiscoGetSchedulesResponses: " >> Summary_%1-%2.log
-grep -c "DiscoGetSchedulesResponse Received" TestRun-%1-%2.log >> Summary_%1-%2.log
 echo | set /p="DiscoGetSchedulesResponses: " >> Summary_%1-%2.log
 grep -c "DiscoGetSchedulesResponse Received" TestRun-%1-%2.log >> Summary_%1-%2.log
 echo | set /p="DiscoDataResponses: " >> Summary_%1-%2.log
