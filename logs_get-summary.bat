@@ -38,7 +38,6 @@ grep -E    "Warning|Error"  disco-service*.log   | grep -v "CleanupTrackedErrors
 echo | set /p="siemens-adapter.log Warnings, Errors: " >> Summary_%1-%2.log
 grep -E    "Warning|Error"  siemens-adapter*.log | grep -v "CleanupTrackedErrors" | grep -E -c "Warning|Error" >> Summary_%1-%2.log
 echo. >> Summary_%1-%2.log
-
 echo ----------------------------------------------------------------------- >> Summary_%1-%2.log
-echo End Date-Time: %DATE% %TIME% >> Summary_%1-%2.log
+echo End Date-Time: %EndDateTime% >> Summary_%1-%2.log
 cd ..

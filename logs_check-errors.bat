@@ -12,6 +12,6 @@ echo +++ siemens-adapter +++ 1>>  Warnings-Errors.log
 grep -E "Warning|Error|BAD_REQUEST" siemens-adapter*.log | grep -v "CleanupTrackedErrors" >> Warnings-Errors.log
 echo. >> Warnings-Errors.log
 echo ----------------------------------------------------------------------- >> Warnings-Errors.log
-echo End Date Time: %DATE% %TIME% >> Warnings-Errors.log
+echo End Date-Time: %EndDateTime% >> Warnings-Errors.log
 echo Errors logged into Warnings-Errors.log
 cd ..
