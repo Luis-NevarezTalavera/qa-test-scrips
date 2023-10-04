@@ -2,7 +2,7 @@
 cd C:\ABS\TestClient\LogFolder-%1-%2\
 echo Starting Summary for Test: %1-%2
 echo ++--- Summary for Test: %1-%2 ---++ >   Summary_%1-%2.log
-echo Start Date-Time: StartDateTime >> Summary_%1-%2.log
+echo Start Date-Time: %StartDateTime% >> Summary_%1-%2.log
 echo ----------------------------------------------------------------------- >> Summary_%1-%2.log
 echo. >> Summary_%1-%2.log
 
@@ -36,9 +36,9 @@ grep -E -c "BAD_REQUEST" TestRun-%1-%2.log >> Summary_%1-%2.log
 echo | set /p="TestRun.log Warnings, Errors: " >> Summary_%1-%2.log
 grep -E "Warning|Error" TestRun-%1-%2.log     | grep -v -E "BAD_REQUEST|CleanupTrackedErrors" | grep -E -c "Warning|Error" >> Summary_%1-%2.log
 echo | set /p="disco-service.log Warnings, Errors: " >> Summary_%1-%2.log
-grep -E    "Warning|Error"  disco-service*.log   | grep -v "CleanupTrackedErrors" | grep -E -c "Warning|Error" >> Summary_%1-%2.log
+grep -E    "Warning|Error|fail:"  disco-service*.log   | grep -v "CleanupTrackedErrors" | grep -E -c "Warning|Error|fail:" >> Summary_%1-%2.log
 echo | set /p="siemens-adapter.log Warnings, Errors: " >> Summary_%1-%2.log
-grep -E    "Warning|Error"  siemens-adapter*.log | grep -v "CleanupTrackedErrors" | grep -E -c "Warning|Error" >> Summary_%1-%2.log
+grep -E    "Warning|Error|fail:"  siemens-adapter*.log | grep -v "CleanupTrackedErrors" | grep -E -c "Warning|Error|fail:" >> Summary_%1-%2.log
 echo. >> Summary_%1-%2.log
 echo ----------------------------------------------------------------------- >> Summary_%1-%2.log
 echo End Date-Time: %EndDateTime% >> Summary_%1-%2.log
