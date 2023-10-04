@@ -7,9 +7,9 @@ echo ----------------------------------------------------------------------- >> 
 echo. >> Warnings-Errors.log
 grep -E "Warning|Error|BAD_REQUEST" TestRun-%1-%2.log    | grep -v "CleanupTrackedErrors" >> Warnings-Errors.log
 echo +++ disco-service +++ 1>>  Warnings-Errors.log
-grep -E "Warning|Error|BAD_REQUEST" disco-service*.log   | grep -v "CleanupTrackedErrors" >> Warnings-Errors.log
+grep -E "Warning|Error|fail:|BAD_REQUEST" disco-service*.log   | grep -v "CleanupTrackedErrors" >> Warnings-Errors.log
 echo +++ siemens-adapter +++ 1>>  Warnings-Errors.log
-grep -E "Warning|Error|BAD_REQUEST" siemens-adapter*.log | grep -v "CleanupTrackedErrors" >> Warnings-Errors.log
+grep -E "Warning|Error|fail:|BAD_REQUEST" siemens-adapter*.log | grep -v "CleanupTrackedErrors" >> Warnings-Errors.log
 echo. >> Warnings-Errors.log
 echo ----------------------------------------------------------------------- >> Warnings-Errors.log
 echo End Date-Time: %EndDateTime% >> Warnings-Errors.log
