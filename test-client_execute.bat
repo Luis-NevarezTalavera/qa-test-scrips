@@ -4,10 +4,10 @@ set /p DateHour=<_temp_DateHour.txt
 echo ++--- Executing test client, test cases from folder TestClientRequests\%1 --++
 echo saving logs to LogFolder-%1-%2_%DateHour%
 cd c:\ABS\TestClient\
-set DateTime=%DATE% %TIME%
-echo Start Date-Time: %DateTime%
+set StartDateTime=%DATE% %TIME%
+echo Start Date-Time: %StartDateTime%
 :: echo on
-echo Start Date-Time: %DateTime% > c:\ABS\TestClient\LogFolder-%1-%2_%DateHour%\TestRun.log
+:: echo Start Date-Time: %DateTime% > c:\ABS\TestClient\LogFolder-%1-%2_%DateHour%\start-end_date-time.log
 disco-test-client TestClientRequests\%1 C:\ABS\TestClient\ConnectionConfig.json c:\ABS\TestClient\LogFolder-%1-%2_%DateHour%
 echo off
 echo Copying CC-Disco and Siemens Adapter log files to LogFolder-%1-%2_%DateHour%
