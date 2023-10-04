@@ -1,8 +1,8 @@
 echo off
 cd C:\ABS\TestClient\LogFolder-%1-%2\
 echo Starting Summary for Test: %1-%2
-echo ++--- Summary for Test: %1-%2 ---++ > Summary_%1-%2.log
-echo Start Date-Time: %DateTime% >> Summary_%1-%2.log
+echo ++--- Summary for Test: %1-%2 ---++ >   Summary_%1-%2.log
+grep "Start Date-Time:" TestRun-%1-%2.log >> Summary_%1-%2.log
 echo ----------------------------------------------------------------------- >> Summary_%1-%2.log
 echo. >> Summary_%1-%2.log
 
@@ -10,16 +10,21 @@ echo | set /p="Handling files: " >> Summary_%1-%2.log
 grep -c "Handling file" TestRun-%1-%2.log >> Summary_%1-%2.log
 echo. >> Summary_%1-%2.log
 
-echo --- Request / Responses --- >> Summary_%1-%2.log
+echo --- Requests --- >> Summary_%1-%2.log
 echo | set /p="DiscoCreateScheduleRequests: " >> Summary_%1-%2.log
 grep -c "Created DiscoCreateScheduleRequest" TestRun-%1-%2.log >> Summary_%1-%2.log
-echo | set /p="DiscoScheduleResponses: " >> Summary_%1-%2.log
-grep -c "DiscoScheduleResponse Received" TestRun-%1-%2.log >> Summary_%1-%2.log
-echo. >> Summary_%1-%2.log
-
+echo | set /p="DiscoGetSchedulesRequests: " >> Summary_%1-%2.log
+grep -c "Created DiscoGetSchedulesRequest" TestRun-%1-%2.log >> Summary_%1-%2.log
 echo | set /p="DiscoDataRequests: " >> Summary_%1-%2.log
 grep -c "Created DiscoDataRequest" TestRun-%1-%2.log >> Summary_%1-%2.log
-echo | set /p="DiscoDataResponse: " >> Summary_%1-%2.log
+echo. >> Summary_%1-%2.log
+
+echo --- Responses --- >> Summary_%1-%2.log
+echo | set /p="DiscoScheduleResponses: " >> Summary_%1-%2.log
+grep -c "DiscoScheduleResponse Received" TestRun-%1-%2.log >> Summary_%1-%2.log
+echo | set /p="DiscoGetSchedulesResponses: " >> Summary_%1-%2.log
+grep -c "DiscoGetSchedulesResponse Received" TestRun-%1-%2.log >> Summary_%1-%2.log
+echo | set /p="DiscoDataResponses: " >> Summary_%1-%2.log
 grep -c "DiscoDataResponse Received" TestRun-%1-%2.log >> Summary_%1-%2.log
 echo. >> Summary_%1-%2.log
 

@@ -5,12 +5,15 @@ echo ++--- Executing test client, test cases from folder TestClientRequests\%1 -
 echo saving logs to LogFolder-%1-%2_%DateHour%
 cd c:\ABS\TestClient\
 set DateTime=%DATE% %TIME%
-echo Start Date, Time: %DateTime%
-echo on
+echo Start Date-Time: %DateTime%
+:: echo on
+echo Start Date-Time: %DateTime% > c:\ABS\TestClient\LogFolder-%1-%2_%DateHour%\TestRun.log
 disco-test-client TestClientRequests\%1 C:\ABS\TestClient\ConnectionConfig.json c:\ABS\TestClient\LogFolder-%1-%2_%DateHour%
 echo off
 echo Copying CC-Disco and Siemens Adapter log files to LogFolder-%1-%2_%DateHour%
 cd LogFolder-%1-%2_%DateHour%\
+copy c:\ABS\TestClient\disco-service.log
+copy c:\ABS\TestClient\siemens-adapter.log
 copy C:\ABS\cc-platform\logs\site\disco-service-%DateHour%.log
 copy C:\ABS\cc-platform\logs\site\siemens-adapter-%DateHour%.log
 copy TestRun.log TestRun-%1-%2_%DateHour%.log
