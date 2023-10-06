@@ -10,7 +10,7 @@ echo == Copying CC-Disco Config files ==
 docker ps | grep 'cc-disco' | awk -F ' '  '{print $1}' 1>cc-disco-containerId.txt
 timeout 3 1>NUL
 set /p containerId=<cc-disco-containerId.txt
-copy_cc-disco-configs.bat %containerId%
+copy_cc-disco-configs.bat C:\ABS\TestClient\Configs %containerId%
 timeout 20 1>NUL
 echo == Starting CC-Adapters-Siemens ==
 start "CC-Adapters-Siemens" docker-run_siemens-adapter.bat

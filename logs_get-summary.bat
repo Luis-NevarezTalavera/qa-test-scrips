@@ -1,5 +1,5 @@
 @echo off
-cd C:\ABS\TestClient\LogFolder\%1-%2\
+:: cd C:\ABS\TestClient\LogFolder\%1-%2\
 echo Starting Summary for Test: %1-%2
 echo ++--- Summary for Test: %1-%2 ---++ >   Summary_%1-%2.log
 echo Start Date-Time: %StartDateTime% >> Summary_%1-%2.log
@@ -42,4 +42,3 @@ grep -E    "Warning|Error|fail:"  siemens-adapter*.log | grep -v "CleanupTracked
 echo. >> Summary_%1-%2.log
 echo ----------------------------------------------------------------------- >> Summary_%1-%2.log
 echo End Date-Time: %EndDateTime% >> Summary_%1-%2.log
-cd ..\..
