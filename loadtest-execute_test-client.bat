@@ -1,7 +1,6 @@
 @echo off
 cd C:\ABS\TestClient\TestClientRequests\LoadTest\
-::copy_cc-disco-configs.bat %1
-::timeout 15 1>NUL
+
 echo ++--- Executing LoadTest for test client: %1 test cases from folder TestClientRequests\%1\%2 --++
 get_date-time.bat | awk -F ':' '{print $1}' > _temp_DateHour.txt
 set /p DateHour=<_temp_DateHour.txt
