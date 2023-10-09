@@ -1,6 +1,6 @@
 @echo off
 echo +++--- Creating Test Clients qty: %1 ---+++
-cd C:\ABS\TestClient\TestClientRequests\LoadTest\
+cd C:\ABS\TestClient\LoadTest\
 
 echo Creating test-client-xx folders, qty: %1\
 for /l %%i in (1,1,%1) do mkdir test-client-%%i
