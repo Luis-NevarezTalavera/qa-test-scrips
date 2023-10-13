@@ -1,5 +1,5 @@
 @echo off
-set LogFolder=%1\%2
+set LogFolder=%1
 echo Looking for Warning or Error log entries in the CC-DISCO.log and Siemens-Adapter.log files
 echo +++ Errors Report for: %2 +++ 1>  %LogFolder%\Warnings-Errors.log
 echo Start Date-Time: %StartDateTime%  >> %LogFolder%\Warnings-Errors.log
