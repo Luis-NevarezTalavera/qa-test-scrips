@@ -12,10 +12,10 @@ dev-utility_install.bat     installs the dotnet nuget tool
 dev-utility_update.bat      updates the dotnet nuget tool
 set-Variables_ABS-Nuget.bat set variables used by the install / update batchs ^^
 
-loadtest-create_test-clients-folders.bat    create test-client-x/request-type folders to be used by the LoadTest
+loadtest-create_test-clients-configs.bat    creates test-client-x cc-disco and requests config files to be used by the LoadTest
 loadtest-populate_test-client-folder.bat    called by batch above
 loadtest-create_request-folder.bat          called by batch above
-loadtest-create_test-clients-queues.bat     called by batch above
+loadtest-create_test-clients-queues.bat     creates the rabbit-mq test-client-x queues by copying each test-client-x config files into the cc-disco container
 
 loadtest-start.bat                  starts LoadTest for [arg-1-qty] test-clients for a [arg-2-requests-folder] 
 loadtest-execute_test-client.bat    called by batch above
