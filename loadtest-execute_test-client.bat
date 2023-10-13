@@ -18,4 +18,4 @@ echo Copying CC-Disco and Siemens Adapter log files to LogFolder\LoadTest-%DateH
 echo F|xcopy /f /q /v /y C:\ABS\cc-platform\logs\site\disco-service-%DateHour%.log   c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%1\%2\disco-service_LoadTest-%DateHour%_%1_%2.log
 echo F|xcopy /f /q /v /y C:\ABS\cc-platform\logs\site\siemens-adapter-%DateHour%.log c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%1\%2\siemens-adapter_LoadTest-%DateHour%_%1_%2.log
 copy /v c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%1\%2\TestRun.log c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%1\%2\TestRun_LoadTest-%DateHour%_%1_%2.log
-logs_check-errors.bat c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%1\%2 LoadTest-%DateHour%_%1_%2
+logs_check-errors.bat c:\ABS\TestClient\LogFolder LoadTest-%DateHour%_%1_%2

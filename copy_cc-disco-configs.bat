@@ -7,10 +7,10 @@ set /p containerId=<cc-disco-containerId.txt
 echo Copying configs for client folder: %1 into container: %containerId%
 echo %TIME%
 echo %1\%1-config.json
-docker cp %1\%1-config.json %containerId%:/app/config/client-configs
+docker cp C:\ABS\TestClient\LoadTest\%1\%1-config.json %containerId%:/app/config/client-configs
 timeout /t 3 1>NUL
 echo %TIME%
 echo %1\siemens-config.json
-docker cp %1\siemens-config.json %containerId%:/app/config/vendor-configs
+docker cp C:\ABS\TestClient\LoadTest\%1\siemens-config.json %containerId%:/app/config/vendor-configs
 echo %TIME%
 echo on
