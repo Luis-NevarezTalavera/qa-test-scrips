@@ -30,11 +30,11 @@ echo | set /p="DiscoDataResponses: " >> %LogFolder%\Summary_%2.log
 grep -c "DiscoDataResponse Received" %LogFolder%\TestRun_%2.log >> %LogFolder%\Summary_%2.log
 echo. >> %LogFolder%\Summary_%2.log
 
-echo -- BAD_REQUESTs / Warnings / Errors --- >> %LogFolder%\Summary_%2.log
-echo | set /p="TestRun.log BAD_REQUEST: "  >> %LogFolder%\Summary_%2.log
-grep -E -c "BAD_REQUEST" %LogFolder%\TestRun_%2.log >> %LogFolder%\Summary_%2.log
+echo -- BAD_REQUEST / HARD_LIMIT / Warnings / Errors --- >> %LogFolder%\Summary_%2.log
+echo | set /p="TestRun.log BAD_REQUEST|HARD_LIMIT: "  >> %LogFolder%\Summary_%2.log
+grep -E -c "BAD_REQUEST|HARD_LIMIT" %LogFolder%\TestRun_%2.log >> %LogFolder%\Summary_%2.log
 echo | set /p="TestRun.log Warnings, Errors: " >> %LogFolder%\Summary_%2.log
-grep -E "Warning|Error" %LogFolder%\TestRun_%2.log     | grep -v -E "BAD_REQUEST|CleanupTrackedErrors" | grep -E -c "Warning|Error" >> %LogFolder%\Summary_%2.log
+grep -E "Warning|Error" %LogFolder%\TestRun_%2.log | grep -v -E "BAD_REQUEST|HARD_LIMIT|CleanupTrackedErrors" | grep -E -c "Warning|Error" >> %LogFolder%\Summary_%2.log
 echo | set /p="disco-service.log Warnings, Errors: " >> %LogFolder%\Summary_%2.log
 grep -E    "Warning|Error|fail:"  %LogFolder%\disco-service_%2.log   | grep -v "CleanupTrackedErrors" | grep -E -c "Warning|Error|fail:" >> %LogFolder%\Summary_%2.log
 echo | set /p="siemens-adapter.log Warnings, Errors: " >> %LogFolder%\Summary_%2.log
