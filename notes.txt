@@ -22,6 +22,9 @@ docker run -p 15672:15672 -p 5672:5672 -h rabbitmq-local ghcr.io/abs-wavesight/r
 docker run ghcr.io/abs-wavesight/cc-disco:windows-2019
 docker run ghcr.io/abs-wavesight/cc-adapters-siemens:windows-2019
 
+---------------- re-start manually siemens-adapter container and all dependencies -------------------------
+c:\ABS\cc-platform\compose\local-dev>docker-compose -f docker-compose.root.yml -f ./disco-service/docker-compose.base.yml -f ./disco-service/docker-compose.image.yml -f ./rabbitmq/docker-compose.base.yml -f ./rabbitmq/docker-compose.image.yml --profile rabbitmq-local -f ./vector/docker-compose.base.yml -f ./vector/docker-compose.image.yml -f ./vector/docker-compose.variant.default.yml --profile vector-site -f ./siemens-adapter/docker-compose.base.yml -f ./siemens-adapter/docker-compose.image.yml up --build
+
 ------------------Copy Configs-----------------------
 cd C:\ABS\cc-disco\client\TestClient\DiscoClientConfig
 docker cp test-client-config.json <ContainerId>:/app/config/client-configs
