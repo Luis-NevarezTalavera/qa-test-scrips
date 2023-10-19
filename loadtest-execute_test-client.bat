@@ -1,8 +1,8 @@
 @echo off
-cd C:\ABS\TestClient\TestClientRequests\LoadTest\
-
+cd C:\ABS\TestClient\LoadTest\
 echo ++--- Executing LoadTest: %1 for test client: %2 with test cases from folder TestClientRequests\%1\%2 --++
 get_date-time.bat | awk -F ':' '{print $1}' > _temp_DateHour.txt
+timeout /t 1
 set /p DateHour=<_temp_DateHour.txt
 echo saving logs to LogFolder\LoadTest-%DateHour%_%1\%2
 mkdir c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%1\%2
