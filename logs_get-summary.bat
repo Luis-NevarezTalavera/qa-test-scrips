@@ -1,5 +1,5 @@
 @echo off
-set LogFolder=%1\%2
+set LogFolder=%1
 echo Starting Summary for Test: %2
 echo ++--- Summary for Test: %2 ---++ >   %LogFolder%\Summary_%2.log
 echo Start Date-Time: %StartDateTime% >> %LogFolder%\Summary_%2.log
