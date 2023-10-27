@@ -42,13 +42,6 @@ dotnet tool update  Abs.CommonCore.Disco.TestClient --global --configfile C:\ABS
 disco-test-client "C:\ABS\cc-disco\client\TestClient\Examples\TestScenario1" "C:\ABS\cc-disco\client\TestClient\ConnectionConfig.json" "C:\ABS\cc-disco\client\TestClient\LogFolder"
 
 
-
-
-
-
-
-
-
 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
 cc-local run --deps i -r -m r
 
