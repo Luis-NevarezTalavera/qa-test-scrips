@@ -8,6 +8,8 @@ echo. >> %LogFolder%\Summary_%2.log
 
 echo | set /p="Handling files: " >> %LogFolder%\Summary_%2.log
 grep -c "Handling file" %LogFolder%\TestRun_%2.log >> %LogFolder%\Summary_%2.log
+echo | set /p="    negative TCs: " >> %LogFolder%\Summary_%2.log
+grep "Handling file" %LogFolder%\TestRun_%2.log | grep "neg" | wc -l >> %LogFolder%\Summary_%2.log
 echo. >> %LogFolder%\Summary_%2.log
 
 echo --- Requests --- >> %LogFolder%\Summary_%2.log
@@ -26,8 +28,8 @@ echo | set /p="DiscoScheduleResponses: " >> %LogFolder%\Summary_%2.log
 grep -c "DiscoScheduleResponse Received" %LogFolder%\TestRun_%2.log >> %LogFolder%\Summary_%2.log
 echo | set /p="DiscoGetSchedulesResponses: " >> %LogFolder%\Summary_%2.log
 grep -c "DiscoGetSchedulesResponse Received" %LogFolder%\TestRun_%2.log >> %LogFolder%\Summary_%2.log
-echo | set /p="DiscoDataResponses: " >> %LogFolder%\Summary_%2.log
-grep -c "DiscoDataResponse Received" %LogFolder%\TestRun_%2.log >> %LogFolder%\Summary_%2.log
+echo | set /p="DiscoDataResponses with values: " >> %LogFolder%\Summary_%2.log
+grep "DiscoDataResponse Received" %LogFolder%\TestRun_%2.log | grep "value" | wc -l >> %LogFolder%\Summary_%2.log
 echo. >> %LogFolder%\Summary_%2.log
 
 echo -- BAD_REQUEST / HARD_LIMIT / Warnings / Errors --- >> %LogFolder%\Summary_%2.log
