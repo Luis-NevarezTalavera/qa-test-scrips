@@ -1,6 +1,10 @@
 # qa-test-scrips
 The Scripts in this folder will facilitate the Installation, Configuration and Testing (functional / load) of CC-Disco and CC-Adapters-Siemens projects
 
+the qa-test-scripts relly on linux tools like grep, awk, wc, sed, these tools can be installed on windows using the open source git client, do a custom installation and enable the tools option
+https://git-scm.com/downloads
+
+
 # Test Script Files
 
 README.md                   This File
