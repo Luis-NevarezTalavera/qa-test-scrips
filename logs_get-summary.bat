@@ -24,10 +24,10 @@ grep -c "Created DiscoDataRequest" %LogFolder%\TestRun_%2.log >> %LogFolder%\Sum
 echo. >> %LogFolder%\Summary_%2.log
 
 echo --- Responses --- >> %LogFolder%\Summary_%2.log
-echo | set /p="DiscoScheduleResponses: " >> %LogFolder%\Summary_%2.log
-grep -c "DiscoScheduleResponse Received" %LogFolder%\TestRun_%2.log >> %LogFolder%\Summary_%2.log
-echo | set /p="DiscoGetSchedulesResponses: " >> %LogFolder%\Summary_%2.log
-grep -c "DiscoGetSchedulesResponse Received" %LogFolder%\TestRun_%2.log >> %LogFolder%\Summary_%2.log
+echo | set /p="DiscoScheduleResponses with scheduleIds: " >> %LogFolder%\Summary_%2.log
+grep "DiscoScheduleResponse Received" %LogFolder%\TestRun_%2.log | grep -v "\"scheduleId\": \"\"" | wc -l >> %LogFolder%\Summary_%2.log
+echo | set /p="DiscoGetSchedulesResponses with scheduleIds: " >> %LogFolder%\Summary_%2.log
+grep "DiscoGetSchedulesResponse Received" %LogFolder%\TestRun_%2.log | grep -v "\"scheduleIds\": \[ \]" | wc -l >> %LogFolder%\Summary_%2.log
 echo | set /p="DiscoDataResponses with values: " >> %LogFolder%\Summary_%2.log
 grep "DiscoDataResponse Received" %LogFolder%\TestRun_%2.log | grep "value" | wc -l >> %LogFolder%\Summary_%2.log
 echo. >> %LogFolder%\Summary_%2.log
