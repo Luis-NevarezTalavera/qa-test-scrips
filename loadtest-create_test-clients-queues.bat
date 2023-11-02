@@ -1,5 +1,5 @@
 echo off
-set /a LastClient=%1+%2
+set /a LastClient=%1+%2-1
 echo +++--- Creating Disco Test Clients queues qty: %1 starting at Test Client # %2 ---+++
 cd C:\ABS\TestClient\LoadTest\
 
