@@ -4,7 +4,7 @@ echo +++----- Starting Generating Summary for Test: %2 -----+++
 
 echo Looking for Warning or Error log entries in the CC-DISCO.log and Siemens-Adapter.log files
 echo +++ Errors Report for: %2 +++ 1>  %LogFolder%\Warnings-Errors.log
-echo Start Date-Time: %StartDateTime%  >> %LogFolder%\Warnings-Errors.log
+grep "Start" %LogFolder%\start-end_date-time.log | head -1 >> %LogFolder%\Warnings-Errors.log
 echo ----------------------------------------------------------------------- >> %LogFolder%\Warnings-Errors.log 
 echo. >> %LogFolder%\Warnings-Errors.log
 echo +++ TestRun_%2.log +++ 1>>  %LogFolder%\Warnings-Errors.log
@@ -15,12 +15,13 @@ echo +++ siemens-adapter +++ 1>>  %LogFolder%\Warnings-Errors.log
 grep -E "Warning|Error|fail:|BAD_REQUEST|HARD_LIMIT" %LogFolder%\siemens-adapter_%2.log | grep -v "CleanupTrackedErrors" >> %LogFolder%\Warnings-Errors.log
 echo. >> %LogFolder%\Warnings-Errors.log
 echo ----------------------------------------------------------------------- >> %LogFolder%\Warnings-Errors.log
-echo End Date-Time: %EndDateTime% >> %LogFolder%\Warnings-Errors.log
+grep "End" %LogFolder%\start-end_date-time.log | tail -1 >> %LogFolder%\Warnings-Errors.log
 echo Errors logged into %LogFolder%\Warnings-Errors.log
 
+
 echo Counting Requests, Responses and Errors into Summary Report
-echo ++--- Summary for Test: %2 ---++ >   %LogFolder%\Summary_%2.log
-echo Start Date-Time: %StartDateTime% >> %LogFolder%\Summary_%2.log
+echo ++--- Summary for Test: %2 ---++ > %LogFolder%\Summary_%2.log
+grep "Start" %LogFolder%\start-end_date-time.log | head -1 >> %LogFolder%\Summary_%2.log
 echo ----------------------------------------------------------------------- >> %LogFolder%\Summary_%2.log
 echo. >> %LogFolder%\Summary_%2.log
 
@@ -61,6 +62,6 @@ echo | set /p="siemens-adapter.log Warnings, Errors: " >> %LogFolder%\Summary_%2
 grep -E    "Warning|Error|fail:"  %LogFolder%\siemens-adapter_%2.log | grep -v "CleanupTrackedErrors" | grep -E -c "Warning|Error|fail:" >> %LogFolder%\Summary_%2.log
 echo. >> %LogFolder%\Summary_%2.log
 echo ----------------------------------------------------------------------- >> %LogFolder%\Summary_%2.log
-echo End Date-Time: %EndDateTime% >> %LogFolder%\Summary_%2.log
+grep "End" %LogFolder%\start-end_date-time.log | tail -1 >> %LogFolder%\Summary_%2.log
 echo Summary for Test: %2 Created Successfully: %LogFolder%\Summary_%2.log
 echo on
