@@ -6,15 +6,15 @@ set startClient=%3
 set testDurationMns=%4
 :: Variables
 set /a lastClient=startClient+clientsQty-1
-set testClientTimeout=285
+set testClientTimeout=280
 set cycleDurationMns=5
 set waitForNextLoop=0
 set loops=1
 
 if %testType%==OnDemand (
     set /a loops=testDurationMns/cycleDurationMns
-    set /a "waitForNextLoop=(cycleDurationMns*60)-(clientsQty*2)-1"
-    set testClientTimeout=285
+    set /a "waitForNextLoop=(cycleDurationMns*60)-(clientsQty*2)-2"
+    set testClientTimeout=280
     ) else (
     set loops=1
     set waitForNextLoop=0
@@ -22,7 +22,7 @@ if %testType%==OnDemand (
     )
 
 cd C:\ABS\TestClient\LoadTest\
-:: Clearing Messages from the DREX Error queue
+:: Clearing Messages from the DREX Error queue in case there are any
 call rabbitmq-read_drex-errors.bat 2000
 get_date-time.bat | awk -F ':' '{print $1}' > _temp_DateHour.txt
 set StartDateTime=%DATE% %TIME%
@@ -48,17 +48,24 @@ for /l %%j in (1,1,%loops%) do (
         start "test-client-%%i %%j" loadtest-execute_test-client %testType% disco-test-client-%%i %%j
     )
 
-    echo "clearing DREX errors queue"
-    call rabbitmq-read_drex-errors.bat 200
+    echo +--- Waiting %waitForNextLoop% secs for next batch of TestClients, 330 secs after the last batch ... Ctrl+C to end ---+
+    if %%j LSS %loops% ( timeout /t %waitForNextLoop% ) else ( timeout /t 330 )
 
-    echo +--- Waiting %waitForNextLoop% secs to continue ... Ctrl + C to end ---+
-    if %%j LSS %loops% timeout /t %waitForNextLoop%
 )
+
+echo Clearing RabbitMQ DREX errors queue
+cd C:\ABS\TestClient\LoadTest\
+call rabbitmq-read_drex-errors.bat 200
+
 set EndDateTime=%DATE% %TIME%
 echo End Date-Time: %EndDateTime%
 echo About to create Grand Summary for LoadTest: %DateHour% %testType%, press any key when All Individual Summaries are created
-pause
-call loadtest-create_summary.bat LoadTest-%DateHour%_%testType% %clientsQty%
+
 cd C:\ABS\TestClient\LogFolder
+call loadtest-create_summary.bat LoadTest-%DateHour%_%testType% %clientsQty%
+
+echo Clearing up original TestRun.log from each test client subfolder
+for /l %%i in (%startClient%,1,%lastClient%) do del /q C:\ABS\TestClient\Logfolder\LoadTest-%DateHour%_%testType%\disco-test-client-%%i\TestRun.log
+
 echo ++--- Load Test Completed Successfully ---++
 echo on

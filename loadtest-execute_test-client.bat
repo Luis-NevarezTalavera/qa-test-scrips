@@ -24,4 +24,6 @@ echo F|xcopy /f /q /v /y c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%Regres
 echo F|xcopy /f /q /v /y C:\ABS\cc-platform\logs\site\disco-service-%DateHour%.log   c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%\disco-service_LoadTest-%DateHour%_%RegressionType%_%TestClient%.log
 echo F|xcopy /f /q /v /y C:\ABS\cc-platform\logs\site\siemens-adapter-%DateHour%.log c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%\siemens-adapter_LoadTest-%DateHour%_%RegressionType%_%TestClient%.log
 call logs-get_summary.bat c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient% LoadTest-%DateHour%_%RegressionType%_%TestClient%
+echo +--- Clearing RabbitMQ DREX errors queue from previous batch ---+
+call rabbitmq-read_drex-errors.bat 10 %TestClient%
 exit
