@@ -34,7 +34,7 @@ copy_cc-disco-configs.bat   copies the [arg1-test-client]-config and siemens-con
 cd_cc-disco.bat
 cd_test-client.bat
 cd_test-scripts.bat
-get_date-time.bat
+date-time.bat
 notes.txt
 
 docker-login.bat

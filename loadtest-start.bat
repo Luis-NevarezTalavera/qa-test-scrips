@@ -13,8 +13,8 @@ set loops=1
 
 if %testType%==OnDemand (
     set /a "loops=testDurationMns/cycleDurationMns"
-    set /a "waitForNextLoop=(cycleDurationMns*60)-(clientsQty*2)"
-    set /a "testClientTimeout=cycleDurationMns-30"
+    set /a "waitForNextLoop=(cycleDurationMns*60)-(clientsQty*0)-3"
+    set /a "testClientTimeout=(cycleDurationMns*60)-30"
     ) else (
     set loops=1
     set waitForNextLoop=0
@@ -24,7 +24,8 @@ if %testType%==OnDemand (
 echo Clearing RabbitMQ DREX errors queue
 cd C:\ABS\TestClient\LoadTest\
 call rabbitmq-read_drex-errors.bat 2000 before-LoadTest
-get_date-time.bat | awk -F ':' '{print $1}' > _temp_DateHour.txt
+call date-time.bat
+set DateHour=%mydate%_%mytimehh%
 set StartDateTime=%DATE% %TIME%
 
 echo +++--- Starting CC-DISCO / Siemens Adapter Load Test ---+++
@@ -33,7 +34,6 @@ echo Start Date-Time: %StartDateTime%
 
 echo +-- Setting Test Client Timeout in the ConnectionConfig.json file --+
 for /l %%i in (%startClient%,1,%lastClient%) do call test-client_set-timeout disco-test-client-%%i %testClientTimeout%
-set /p DateHour=<C:\ABS\TestClient\LoadTest\_temp_DateHour.txt
 
 cd C:\ABS\TestClient\LoadTest\
 echo +--- Creating %clientsQty% Test Client instances in independent Command Prompt Windows ---+
@@ -42,10 +42,11 @@ if %testType%==OnDemand echo +--- Starting Test Clients %startClient% to %lastCl
 for /l %%j in (1,1,%loops%) do (
 
     echo +--- Starting %clientsQty% New Test Clients every %cycleDurationMns% mns, Loop: %%j of Total Loops: %loops% ---+
-    time /t
-
+    call date-time.bat
+    set DateHourLastClient=%mydate%_%mytimehh%
+    
     for /l %%i in (%startClient%,1,%lastClient%) do (
-        timeout /t 2
+::        timeout /t 2
         echo starting disco-test-client-%%i
         start "test-client-%%i %%j" loadtest-execute_test-client %testType% disco-test-client-%%i %%j
     )

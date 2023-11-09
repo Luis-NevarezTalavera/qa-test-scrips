@@ -1,7 +1,7 @@
 @echo off
 cd c:\ABS\TestClient\
-get_date-time.bat | awk -F ':' '{print $1}' > _temp_DateHour.txt
-set /p DateHour=<_temp_DateHour.txt
+call date-time.bat
+set DateHour=%mydate%_%mytimehh%
 echo ++--- Executing Disco Test client, test cases from folder TestClientRequests\%1 --++
 echo saving logs to LogFolder\%1-%2_%DateHour%
 set StartDateTime=%DATE% %TIME%

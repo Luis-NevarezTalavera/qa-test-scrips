@@ -3,7 +3,6 @@ set RegressionType=%1
 set TestClient=%2
 set loop=%3
 echo ++--- Executing LoadTest: %RegressionType% for test client: %TestClient% with test cases from folder TestClientRequests\%RegressionType%\%TestClient% --++
-get_date-time.bat | awk -F ':' '{print $1}' > C:\ABS\TestClient\LoadTest\_temp_latest_DateHour.txt
 echo saving logs to LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%
 mkdir c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%
 set StartDateTime=%DATE% %TIME%
@@ -12,7 +11,6 @@ echo Start Date-Time %loop%: %StartDateTime%
 echo on
 disco-test-client C:\ABS\TestClient\LoadTest\%TestClient%\%RegressionType% C:\ABS\TestClient\LoadTest\%TestClient%\ConnectionConfig.json C:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%
 @echo off
-set /p DateHourLastClient=<_temp_DateHour_LastClient.txt
 set EndDateTime=%DATE% %TIME%
 echo End Date-Time %loop%: %EndDateTime% >> c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%\start-end_date-time.log
 echo End Date-Time %loop%: %EndDateTime%
