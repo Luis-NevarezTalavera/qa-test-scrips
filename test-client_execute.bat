@@ -1,8 +1,8 @@
 @echo off
+echo ++--- Executing Disco Test client, test cases from folder TestClientRequests\%1 --++
 cd c:\ABS\TestClient\
 call date-time.bat
 set DateHour=%mydate%_%mytimehh%
-echo ++--- Executing Disco Test client, test cases from folder TestClientRequests\%1 --++
 echo saving logs to LogFolder\%1-%2_%DateHour%
 set StartDateTime=%DATE% %TIME%
 echo Start Date-Time: %StartDateTime%

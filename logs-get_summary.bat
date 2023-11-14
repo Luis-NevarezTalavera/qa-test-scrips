@@ -5,9 +5,9 @@ set DateHourLast=%3
 echo +++----- Starting Generating Summary for Test: %TestNameLogs% -----+++
 
 echo +++ Looking for Warning or Error log entries in the TestRun.log, CC-DISCO.log and Siemens-Adapter.log files +++
-grep -E "Warning|Error|BAD_REQUEST|HARD_LIMIT" %LogFolderLogs%\TestRun_%TestNameLogs%.log | grep -v "CleanupTrackedErrors" > %LogFolderLogs%\TestRun_Warnings-Errors.log
-grep -E "Warning|Error|warn|fail" C:\ABS\cc-platform\logs\site\disco-service-%DateHourLast%.log | grep -Ev "CleanupTrackedErrors|is not registered for routing|could not be reached, retrying in" >> %LogFolderLogs%\disco-service_Warnings-Errors.log
-grep -E "Warning|Error|warn|fail" C:\ABS\cc-platform\logs\site\siemens-adapter-%DateHourLast%.log  >> %LogFolderLogs%\siemens-adapter_Warnings-Errors.log
+grep -E "Warning|Error|BAD_REQUEST|HARD_LIMIT" %LogFolderLogs%\TestRun_%TestNameLogs%.log         | grep -v  "CleanupTrackedErrors" > %LogFolderLogs%\TestRun_Warnings-Errors.log
+grep -E "Warning|Error|warn|fail" C:\ABS\cc-platform\logs\site\disco-service-%DateHourLast%.log   | grep -Ev "CleanupTrackedErrors|is not registered for routing|could not be reached, retrying in" >> %LogFolderLogs%\disco-service_Warnings-Errors.log
+grep -E "Warning|Error|warn|fail" C:\ABS\cc-platform\logs\site\siemens-adapter-%DateHourLast%.log | grep -v  "CleanupTrackedErrors" >> %LogFolderLogs%\siemens-adapter_Warnings-Errors.log
 echo Errors logged into %LogFolderLogs%\TestRun,disco-service,siemens-adapter _Warnings-Errors.log
 
 echo Counting Requests, Responses and Errors into Summary Report
@@ -44,9 +44,9 @@ echo. >> %LogFolderLogs%\Summary_%TestNameLogs%.log
 
 echo -- BAD_REQUEST / HARD_LIMIT / Warnings / Errors --- >> %LogFolderLogs%\Summary_%TestNameLogs%.log
 echo | set /p="TestRun.log BAD_REQUEST|HARD_LIMIT: "  >> %LogFolderLogs%\Summary_%TestNameLogs%.log
-grep -E -c "BAD_REQUEST|HARD_LIMIT" %LogFolderLogs%\TestRun_%TestNameLogs%.log >> %LogFolderLogs%\Summary_%TestNameLogs%.log
+grep -E -c "BAD_REQUEST|HARD_LIMIT" %LogFolderLogs%\TestRun_Warnings-Errors.log >> %LogFolderLogs%\Summary_%TestNameLogs%.log
 echo | set /p="TestRun.log Warnings, Errors: " >> %LogFolderLogs%\Summary_%TestNameLogs%.log
-grep -E "Warning|Error" %LogFolderLogs%\TestRun_%TestNameLogs%.log | grep -v -E "BAD_REQUEST|HARD_LIMIT|CleanupTrackedErrors" | grep -E -c "Warning|Error" >> %LogFolderLogs%\Summary_%TestNameLogs%.log
+grep -E "Warning|Error" %LogFolderLogs%\TestRun_Warnings-Errors.log | grep -v -E "BAD_REQUEST|HARD_LIMIT" | grep -E -c "Warning|Error" >> %LogFolderLogs%\Summary_%TestNameLogs%.log
 echo | set /p="disco-service.log Warnings, Errors: " >> %LogFolderLogs%\Summary_%TestNameLogs%.log
 grep -E -c "Warning|Error|warn|fail"  %LogFolderLogs%\disco-service_Warnings-Errors.log   >> %LogFolderLogs%\Summary_%TestNameLogs%.log
 echo | set /p="siemens-adapter.log Warnings, Errors: " >> %LogFolderLogs%\Summary_%TestNameLogs%.log
