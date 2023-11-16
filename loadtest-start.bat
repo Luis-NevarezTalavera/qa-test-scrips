@@ -29,10 +29,9 @@ set DateHour=%mydate%_%mytimehh%
 set StartDateTime=%DATE% %TIME%
 
 :: Clearing the Error Messages from the DRex queue in RabbitMQ
-echo +-- Clearing RabbitMQ DREX errors queue --+
 call rabbitmq-read_drex-errors.bat 2000 before-LoadTest
 
-echo +-- Setting Test Client Timeout in the ConnectionConfig.json file --+
+echo +-- Setting Test Client Timeout in the ConnectionConfig.json file to %testClientTimeout% --+
 for /l %%i in (%startClient%,1,%lastClient%) do call test-client_set-timeout disco-test-client-%%i %testClientTimeout%
 
 cd C:\ABS\TestClient\LoadTest\
@@ -46,8 +45,8 @@ for /l %%j in (1,1,%loops%) do (
     set DateHourLastClient=%mydate%_%mytimehh%
     
     for /l %%i in (%startClient%,1,%lastClient%) do (
-        timeout /t 1
-        echo starting disco-test-client-%%i
+        timeout /t 1 > NUL
+        echo -- starting disco-test-client-%%i --
         start "test-client-%%i %%j" loadtest-execute_test-client %testType% disco-test-client-%%i %%j
     )
     
@@ -56,7 +55,7 @@ for /l %%j in (1,1,%loops%) do (
 
 )
 
-echo Clearing RabbitMQ DREX errors queue
+:: Clearing RabbitMQ DREX errors queue
 cd C:\ABS\TestClient\LoadTest\
 call rabbitmq-read_drex-errors.bat 200 after-LoadTest
 
@@ -67,7 +66,7 @@ echo About to create Grand Summary for LoadTest: %DateHour% %testType%, press an
 cd C:\ABS\TestClient\LogFolder
 call loadtest-create_summary.bat LoadTest-%DateHour%_%testType% %clientsQty%
 
-echo Clearing up original TestRun.log from each test client subfolder
+echo +-- Clearing up original TestRun.log from each test client subfolder --+
 for /l %%i in (%startClient%,1,%lastClient%) do del /q C:\ABS\TestClient\Logfolder\LoadTest-%DateHour%_%testType%\disco-test-client-%%i\TestRun.log
 
 echo ++--- Load Test Completed Successfully ---++

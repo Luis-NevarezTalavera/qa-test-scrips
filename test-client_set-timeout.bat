@@ -1,7 +1,7 @@
 @echo off
 set TestClient=%1
 set TimeOutSecs=%2
-echo == Setting CloseAppTimeOutSeconds for %TestClient% ==
+echo +-- Setting CloseAppTimeOutSeconds for %TestClient% to %TimeOutSecs% --+
 cd C:\ABS\TestClient\LoadTest\%TestClient%
 grep "CloseAppTimeOutSeconds" ConnectionConfig.json | awk -F '  '  '{print $2}' > CloseAppTimeOutSeconds.txt
 set /p CloseAppTimeOutSeconds=<CloseAppTimeOutSeconds.txt
