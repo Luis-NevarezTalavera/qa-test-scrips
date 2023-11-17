@@ -5,12 +5,12 @@ call date-time.bat
 set DateHour=%mydate%_%mytimehh%
 echo saving logs to LogFolder\%1-%2_%DateHour%
 set StartDateTime=%DATE% %TIME%
-echo Start Date-Time: %StartDateTime%
+:: echo Start Date-Time: %StartDateTime%
 disco-test-client TestClientRequests\%1 C:\ABS\TestClient\LoadTest\disco-test-client\ConnectionConfig.json c:\ABS\TestClient\LogFolder\%1-%2_%DateHour%
 set EndDateTime=%DATE% %TIME%
 echo End Date-Time: %EndDateTime%
-echo Start Date-Time: %StartDateTime% > c:\ABS\TestClient\LogFolder\%1-%2_%DateHour%\start-end_date-time.log
-echo End Date-Time: %EndDateTime%    >> c:\ABS\TestClient\LogFolder\%1-%2_%DateHour%\start-end_date-time.log
+echo Start Date-Time:	%StartDateTime% > c:\ABS\TestClient\LogFolder\%1-%2_%DateHour%\start-end_date-time.log
+echo End Date-Time:	%EndDateTime%    >> c:\ABS\TestClient\LogFolder\%1-%2_%DateHour%\start-end_date-time.log
 echo off
 echo Copying CC-Disco and Siemens Adapter log files to LogFolder\%1-%2_%DateHour%
 cd c:\ABS\TestClient\LogFolder\%1-%2_%DateHour%\

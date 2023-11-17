@@ -6,13 +6,13 @@ echo ++--- Executing LoadTest: %RegressionType% for test client: %TestClient% wi
 echo saving logs to LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%
 mkdir c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%
 set StartDateTime=%DATE% %TIME%
-echo Start Date-Time %loop%: %StartDateTime% >> c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%\start-end_date-time.log
+echo Start Date-Time %loop%:	%StartDateTime% >> c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%\start-end_date-time.log
 echo Start Date-Time %loop%: %StartDateTime%
 echo on
 disco-test-client C:\ABS\TestClient\LoadTest\%TestClient%\%RegressionType% C:\ABS\TestClient\LoadTest\%TestClient%\ConnectionConfig.json C:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%
 @echo off
 set EndDateTime=%DATE% %TIME%
-echo End Date-Time %loop%: %EndDateTime% >> c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%\start-end_date-time.log
+echo End Date-Time %loop%:	%EndDateTime% >> c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%\start-end_date-time.log
 echo End Date-Time %loop%: %EndDateTime%
 echo Copying CC-Disco and Siemens Adapter log files to LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%
 echo F|xcopy /d /v /y c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%\TestRun.log c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%\TestRun_LoadTest-%DateHour%_%RegressionType%_%TestClient%.log
