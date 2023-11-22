@@ -9,16 +9,19 @@ set /a lastClient=startClient+clientsQty-1
 set cycleDurationMns=5
 set testClientTimeout=0
 set waitForNextLoop=0
+set waitLastLoop=0
 set loops=1
 
 if %testType%==OnDemand (
     set /a "loops=testDurationMns/cycleDurationMns"
-    set /a "waitForNextLoop=(cycleDurationMns*60)-(clientsQty*2)"
-    set /a "testClientTimeout=(cycleDurationMns*60)-30"
+    set /a "waitForNextLoop=(cycleDurationMns*60)-(clientsQty*18/10)"
+    set /a "waitLastLoop=(cycleDurationMns*2)*60"
+    set /a "testClientTimeout=(cycleDurationMns*60)-15"
     ) else (
     set loops=1
     set waitForNextLoop=0
     set /a "testClientTimeout=(testDurationMns+3)*60"
+    set /a "waitLastLoop=(testDurationMns+4)*60"
     )
 
 cd C:\ABS\TestClient\LoadTest\
@@ -40,19 +43,32 @@ echo +--- Creating %clientsQty% Test Client instances in independent Command Pro
 if %testType%==OnDemand echo +--- Starting Test Clients %startClient% to %lastClient%, every 5 minutes, wait time: %waitForNextLoop%, loops: %loops% ---+
 for /l %%j in (1,1,%loops%) do (
 
+    :: Setting Clients timeout longer for the last Loop, in order to catch the last Responses
+    if %testType%==OnDemand (
+        if %%j EQU %loops% (
+            set /a "testClientTimeout=waitLastLoop-30"
+            for /l %%i in (%startClient%,1,%lastClient%) do call test-client_set-timeout disco-test-client-%%i %testClientTimeout%
+        )
+    )
+        
     echo +--- Starting %clientsQty% New Test Clients every %cycleDurationMns% mns, Loop: %%j of Total Loops: %loops% ---+
     call date-time.bat
     set DateHourLastClient=%mydate%_%mytimehh%
-    
+    echo echo|set /p="-- starting disco-test-client: "
     for /l %%i in (%startClient%,1,%lastClient%) do (
         timeout /t 1 > NUL
-        echo -- starting disco-test-client-%%i --
+        echo|set /p="%%i "
         start "test-client-%%i %%j" loadtest-execute_test-client %testType% disco-test-client-%%i %%j
     )
-    
-    echo +--- Waiting %waitForNextLoop% secs for next batch of TestClients, 330 secs after the last batch, Loop: %%j of Total Loops: %loops% ... Ctrl+C to end ---+
-    if %%j LSS %loops% ( timeout /t %waitForNextLoop% ) else ( timeout /t 330 )
+    echo --
 
+    echo +--- Waiting %waitForNextLoop% secs for next batch of TestClients, %waitLastLoop% secs after the last batch, Loop: %%j of Total Loops: %loops% ... Ctrl+C to end ---+
+    call date-time.bat
+    if %%j LSS %loops% (
+        timeout /t %waitForNextLoop%
+    ) else (
+        timeout /t %waitLastLoop% 
+    )
 )
 
 :: Clearing RabbitMQ DREX errors queue
