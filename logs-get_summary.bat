@@ -5,7 +5,7 @@ set DateHourLast=%3
 echo +++----- Starting Generating Summary for Test: %TestNameLogs% -----+++
 
 echo +++ Looking for Warning or Error log entries in the TestRun.log, CC-DISCO.log and Siemens-Adapter.log files +++
-grep -E "Warning|Error|BAD_REQUEST|HARD_LIMIT" %LogFolder%\TestRun_%TestNameLogs%.log | grep -v  "CleanupTrackedErrors" > %LogFolder%\TestRun_Warnings-Errors.log
+grep -E "Warning|Error|BAD_REQUEST|HARD_LIMIT|error|Exception" %LogFolder%\TestRun_%TestNameLogs%.log  | grep -v  "CleanupTrackedErrors" > %LogFolder%\TestRun_Warnings-Errors.log
 grep -E "Warning|Error|warn|fail|crit" C:\ABS\cc-platform\logs\site\disco-service-%DateHourLast%.log   | grep -Ev "CleanupTrackedErrors|Could not establish connection|is not registered for routing|could not be reached, retrying in" >> %LogFolder%\disco-service_Warnings-Errors.log
 grep -E "Warning|Error|warn|fail|crit" C:\ABS\cc-platform\logs\site\siemens-adapter-%DateHourLast%.log | grep -Ev "CleanupTrackedErrors|token" >> %LogFolder%\siemens-adapter_Warnings-Errors.log
 echo Errors logged into %LogFolder%\TestRun,disco-service,siemens-adapter _Warnings-Errors.log
@@ -42,7 +42,7 @@ echo -- BAD_REQUEST / HARD_LIMIT / Warnings / Errors --- >> %LogFolder%\Summary_
 echo | set /p="TestRun.log BAD_REQUEST|HARD_LIMIT:	" >> %LogFolder%\Summary_%TestNameLogs%.log
 grep -E -c "BAD_REQUEST|HARD_LIMIT" %LogFolder%\TestRun_Warnings-Errors.log >> %LogFolder%\Summary_%TestNameLogs%.log
 echo | set /p="TestRun.log Warnings, Errors:	" >> %LogFolder%\Summary_%TestNameLogs%.log
-grep -E "Warning|Error" %LogFolder%\TestRun_Warnings-Errors.log | grep -v -E "BAD_REQUEST|HARD_LIMIT" | grep -E -c "Warning|Error" >> %LogFolder%\Summary_%TestNameLogs%.log
+grep -Ev -c "BAD_REQUEST|HARD_LIMIT" %LogFolder%\TestRun_Warnings-Errors.log >> %LogFolder%\Summary_%TestNameLogs%.log
 echo | set /p="disco-service.log Warnings, Errors:	" >> %LogFolder%\Summary_%TestNameLogs%.log
 grep -E -c "Warning|Error|warn|fail|crit"  %LogFolder%\disco-service_Warnings-Errors.log   >> %LogFolder%\Summary_%TestNameLogs%.log
 echo | set /p="siemens-adapter.log Warnings, Errors:	" >> %LogFolder%\Summary_%TestNameLogs%.log
