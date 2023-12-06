@@ -14,10 +14,12 @@ echo End Date-Time:	%EndDateTime%    >> c:\ABS\TestClient\LogFolder\%1-%2_%DateH
 echo off
 echo Copying CC-Disco and Siemens Adapter log files to LogFolder\%1-%2_%DateHour%
 cd c:\ABS\TestClient\LogFolder\%1-%2_%DateHour%\
-copy /v C:\ABS\cc-platform\logs\site\disco-service-%DateHour%.log   C:\ABS\TestClient\LogFolder\%1-%2_%DateHour%\disco-service_%1-%2_%DateHour%.log
-copy /v C:\ABS\cc-platform\logs\site\siemens-adapter-%DateHour%.log C:\ABS\TestClient\LogFolder\%1-%2_%DateHour%\siemens-adapter_%1-%2_%DateHour%.log
-copy /v TestRun.log TestRun_%1-%2_%DateHour%.log
+echo F|xcopy /d /y /q C:\ABS\cc-platform\logs\site\disco-service-%DateHour%.log   C:\ABS\TestClient\LogFolder\%1-%2_%DateHour%\disco-service_%1-%2_%DateHour%.log
+echo F|xcopy /d /y /q C:\ABS\cc-platform\logs\site\siemens-adapter-%DateHour%.log C:\ABS\TestClient\LogFolder\%1-%2_%DateHour%\siemens-adapter_%1-%2_%DateHour%.log
+del /q TestRun_%1-%2_%DateHour%.log
 call logs-get_summary.bat C:\ABS\TestClient\LogFolder\%1-%2_%DateHour% %1-%2_%DateHour% %DateHour%
-echo +--- Clearing RabbitMQ DREX errors queue ---+
-call rabbitmq-read_drex-errors.bat 100 disco-test-client
+rename TestRun.log TestRun_%1-%2_%DateHour%.log
+timeout /t 12 /nobreak
+:: echo +--- Clearing RabbitMQ DREX errors queue ---+
+call rabbitmq-read_drex-errors.bat 300 disco-test-client
 echo ++--- Execution of Disco Test client completed Successfully, test cases: TestClientRequests\%1, log folder: C:\ABS\TestClient\LogFolder\%1-%2_%DateHour%

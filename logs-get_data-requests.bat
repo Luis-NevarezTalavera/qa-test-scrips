@@ -1,4 +1,5 @@
 @echo off
-set TestRun=%1
-echo ++--- Getting Disco Data Requests for LoadTest: %1 ---++
-grep -E "DiscoDataRequest|    \"requestId\"" %TestRun% | awk -F '+00:00' '{print $1 $2}' > DiscoDataRequests.log
+set TestRunFilePath=%1
+set TestRunName=%2
+echo --- Getting DiscoDataRequests for LoadTest file: %TestRunFilePath% ---
+grep "DiscoDataRequest|    \"requestId\":|^  }" %TestRunFilePath% | awk '{RS="}"; print $1"	"$2"	"$5}' >> DiscoDataRequests_%TestRunName%.log

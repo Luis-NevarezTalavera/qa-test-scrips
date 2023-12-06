@@ -1,4 +1,5 @@
 @echo off
-set TestRun=%1
-echo ++--- Getting Disco Data Responses for LoadTest: %1 ---++
-grep "DiscoDataResponse" %TestRun% | awk -F '+00:00' '{print $1 $2}' |  awk -F '"dataPointCollections"' '{print $1}' > DiscoDataResponses.log
+set TestRunFilePath=%1
+set TestRunName=%2
+echo --- Getting DiscoDataResponses for LoadTest file: %TestRunFilePath% ---
+grep "DiscoDataResponse" %TestRunFilePath% | awk '{print $1"	"$2"	"$5"	"$10"	"$14}' >> DiscoDataResponses_%TestRunName%.log

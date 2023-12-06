@@ -14,7 +14,7 @@ set loops=1
 
 if %testType%==OnDemand (
     set /a "loops=testDurationMns/cycleDurationMns"
-    set /a "waitForNextLoop=(cycleDurationMns*60)-(clientsQty*18/10)"
+    set /a "waitForNextLoop=(cycleDurationMns*60)-(clientsQty*20/10)"
     set /a "waitLastLoop=(cycleDurationMns*2)*60"
     set /a "testClientTimeout=(cycleDurationMns*60)-15"
     ) else (
@@ -35,7 +35,11 @@ set StartDateTime=%DATE% %TIME%
 call rabbitmq-read_drex-errors.bat 2000 before-LoadTest
 
 echo +-- Setting Test Client Timeout in the ConnectionConfig.json file to %testClientTimeout% --+
-for /l %%i in (%startClient%,1,%lastClient%) do call test-client_set-timeout disco-test-client-%%i %testClientTimeout%
+echo echo|set /p="-- setting timeout for disco-test-client: "
+for /l %%i in (%startClient%,1,%lastClient%) do (
+    echo|set /p="%%i "
+    call test-client_set-timeout disco-test-client-%%i %testClientTimeout%
+)
 
 cd C:\ABS\TestClient\LoadTest\
 echo +--- Creating %clientsQty% Test Client instances in independent Command Prompt Windows ---+
@@ -65,7 +69,7 @@ for /l %%j in (1,1,%loops%) do (
     echo +--- Waiting %waitForNextLoop% secs for next batch of TestClients, %waitLastLoop% secs after the last batch, Loop: %%j of Total Loops: %loops% ... Ctrl+C to end ---+
     call date-time.bat
     if %%j LSS %loops% (
-        timeout /t %waitForNextLoop%
+        timeout /t %waitForNextLoop% /nobreak
     ) else (
         timeout /t %waitLastLoop% 
     )
