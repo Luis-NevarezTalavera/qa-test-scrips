@@ -18,10 +18,9 @@ set EndDateTime=%DATE% %TIME%
 echo End Date-Time %loop%:	%EndDateTime% >> c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%\start-end_date-time.log
 echo End Date-Time %loop%:	%EndDateTime%
 
-echo Copying CC-Disco and Siemens Adapter log files to LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%
-del /q c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%\TestRun_LoadTest-%DateHour%_%RegressionType%_%TestClient%.log
-call logs-get_summary.bat c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient% LoadTest-%DateHour%_%RegressionType%_%TestClient% %DateHourLastClient%
-rename c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%\TestRun.log c:\ABS\TestClient\LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%\TestRun_LoadTest-%DateHour%_%RegressionType%_%TestClient%.log
+echo Getting Warnings and Errors from CC-Disco, Siemens Adapter log files and Creating Summary for LogFolder\LoadTest-%DateHour%_%RegressionType%\%TestClient%
+if %TestClient%==disco-test-client-1 call logs-get_services-errors.bat LoadTest-%DateHour%_%RegressionType% %DateHourLastClient%
+call logs-get_summary.bat LoadTest-%DateHour%_%RegressionType% %TestClient% %DateHourLastClient%
 
 echo +--- Clearing RabbitMQ DREX errors queue from previous batch ---+
 call rabbitmq-read_drex-errors.bat 10 %TestClient%

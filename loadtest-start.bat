@@ -86,8 +86,5 @@ echo About to create Grand Summary for LoadTest: %DateHour% %testType%, press an
 cd C:\ABS\TestClient\LogFolder
 call loadtest-create_summary.bat LoadTest-%DateHour%_%testType% %clientsQty%
 
-echo +-- Clearing up original TestRun.log from each test client subfolder --+
-for /l %%i in (%startClient%,1,%lastClient%) do del /q C:\ABS\TestClient\Logfolder\LoadTest-%DateHour%_%testType%\disco-test-client-%%i\TestRun.log
-
 echo ++--- Load Test Completed Successfully ---++
 echo on

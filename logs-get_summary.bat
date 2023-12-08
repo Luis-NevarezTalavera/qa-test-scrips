@@ -1,53 +1,54 @@
 @echo off
-set LogFolder=%1
-set TestNameLogs=%2
+set testName=%1
+set LogFolderMain=c:\ABS\TestClient\LogFolder\%testName%
+set testClient=%2
+set LogFolderSub=%LogFolderMain%\%testClient%
+set TestNameLogs=%testName%_%testClient%
 set DateHourLast=%3
 echo +++----- Starting Generating Summary for Test: %TestNameLogs% -----+++
 
-echo +++ Looking for Warning or Error log entries in the TestRun.log, CC-DISCO.log and Siemens-Adapter.log files +++
-grep -E "Warning|Error|BAD_REQUEST|HARD_LIMIT|error|Exception" %LogFolder%\TestRun.log  | grep -v  "CleanupTrackedErrors" > %LogFolder%\TestRun_Warnings-Errors.log
-grep -E "Warning|Error|warn|fail|crit" C:\ABS\cc-platform\logs\site\disco-service-%DateHourLast%.log   | grep -Ev "CleanupTrackedErrors|Could not establish connection|is not registered for routing|could not be reached, retrying in" >> %LogFolder%\disco-service_Warnings-Errors.log
-grep -E "Warning|Error|warn|fail|crit" C:\ABS\cc-platform\logs\site\siemens-adapter-%DateHourLast%.log | grep -Ev "CleanupTrackedErrors|token" >> %LogFolder%\siemens-adapter_Warnings-Errors.log
-echo Errors logged into %LogFolder%\TestRun,disco-service,siemens-adapter _Warnings-Errors.log
+echo +++ Looking for Warning or Error log entries in the TestRun.log +++
+grep -E "Warning|Error|BAD_REQUEST|HARD_LIMIT|error|Exception" %LogFolderSub%\TestRun.log  | grep -v  "CleanupTrackedErrors" > %LogFolderSub%\TestRun_Warnings-Errors.log
+echo Errors logged into %LogFolderSub%\TestRun_Warnings-Errors.log
 
 echo Counting Requests, Responses and Errors into Summary Report
-echo ++--- Summary for Test:	%TestNameLogs%	---++ > %LogFolder%\Summary_%TestNameLogs%.log
-grep "Start" %LogFolder%\start-end_date-time.log | head -1 >> %LogFolder%\Summary_%TestNameLogs%.log
-echo ----------------------------------------------------------------------- >> %LogFolder%\Summary_%TestNameLogs%.log
+echo ++--- Summary for Test:	%TestNameLogs%	---++ > %LogFolderSub%\Summary_%TestNameLogs%.log
+grep "Start" %LogFolderSub%\start-end_date-time.log | head -1 >> %LogFolderSub%\Summary_%TestNameLogs%.log
+echo ----------------------------------------------------------------------- >> %LogFolderSub%\Summary_%TestNameLogs%.log
 
-echo | set /p="Handling files:	" >> %LogFolder%\Summary_%TestNameLogs%.log
-grep "Handling file" %LogFolder%\TestRun.log | wc -l >> %LogFolder%\Summary_%TestNameLogs%.log
-echo | set /p="    negative TCs:	" >> %LogFolder%\Summary_%TestNameLogs%.log
-grep "Handling file" %LogFolder%\TestRun.log | grep "neg" | wc -l >> %LogFolder%\Summary_%TestNameLogs%.log
+echo | set /p="Handling files:	" >> %LogFolderSub%\Summary_%TestNameLogs%.log
+grep "Handling file" %LogFolderSub%\TestRun.log | wc -l >> %LogFolderSub%\Summary_%TestNameLogs%.log
+echo | set /p="    negative TCs:	" >> %LogFolderSub%\Summary_%TestNameLogs%.log
+grep "Handling file" %LogFolderSub%\TestRun.log | grep "neg" | wc -l >> %LogFolderSub%\Summary_%TestNameLogs%.log
 
-echo --- Requests --- >> %LogFolder%\Summary_%TestNameLogs%.log
-echo | set /p="DiscoCreateScheduleRequests:	" >> %LogFolder%\Summary_%TestNameLogs%.log
-grep "Created DiscoCreateScheduleRequest" %LogFolder%\TestRun.log | wc -l >> %LogFolder%\Summary_%TestNameLogs%.log
-echo | set /p="DiscoGetSchedulesRequests:	" >> %LogFolder%\Summary_%TestNameLogs%.log
-grep "Created DiscoGetSchedulesRequest" %LogFolder%\TestRun.log | wc -l >> %LogFolder%\Summary_%TestNameLogs%.log
-echo | set /p="DiscoDeleteScheduleRequests:	" >> %LogFolder%\Summary_%TestNameLogs%.log
-grep "Created DiscoDeleteScheduleRequest" %LogFolder%\TestRun.log | wc -l >> %LogFolder%\Summary_%TestNameLogs%.log
-echo | set /p="DiscoDataRequests:	" >> %LogFolder%\Summary_%TestNameLogs%.log
-grep "Created DiscoDataRequest" %LogFolder%\TestRun.log | wc -l >> %LogFolder%\Summary_%TestNameLogs%.log
+echo --- Requests --- >> %LogFolderSub%\Summary_%TestNameLogs%.log
+echo | set /p="DiscoCreateScheduleRequests:	" >> %LogFolderSub%\Summary_%TestNameLogs%.log
+grep "Created DiscoCreateScheduleRequest" %LogFolderSub%\TestRun.log | wc -l >> %LogFolderSub%\Summary_%TestNameLogs%.log
+echo | set /p="DiscoGetSchedulesRequests:	" >> %LogFolderSub%\Summary_%TestNameLogs%.log
+grep "Created DiscoGetSchedulesRequest" %LogFolderSub%\TestRun.log | wc -l >> %LogFolderSub%\Summary_%TestNameLogs%.log
+echo | set /p="DiscoDeleteScheduleRequests:	" >> %LogFolderSub%\Summary_%TestNameLogs%.log
+grep "Created DiscoDeleteScheduleRequest" %LogFolderSub%\TestRun.log | wc -l >> %LogFolderSub%\Summary_%TestNameLogs%.log
+echo | set /p="DiscoDataRequests:	" >> %LogFolderSub%\Summary_%TestNameLogs%.log
+grep "Created DiscoDataRequest" %LogFolderSub%\TestRun.log | wc -l >> %LogFolderSub%\Summary_%TestNameLogs%.log
 
-echo --- Responses --- >> %LogFolder%\Summary_%TestNameLogs%.log
-echo | set /p="DiscoScheduleResponses with scheduleIds:	" >> %LogFolder%\Summary_%TestNameLogs%.log
-grep "DiscoScheduleResponse Received" %LogFolder%\TestRun.log | grep -v "\"scheduleId\": \"\"" | wc -l >> %LogFolder%\Summary_%TestNameLogs%.log
-echo | set /p="DiscoGetSchedulesResponses with scheduleIds:	" >> %LogFolder%\Summary_%TestNameLogs%.log
-grep "DiscoGetSchedulesResponse Received" %LogFolder%\TestRun.log | grep -v "\"scheduleIds\": \[ \]" | wc -l >> %LogFolder%\Summary_%TestNameLogs%.log
-echo | set /p="DiscoDataResponses with values:	" >> %LogFolder%\Summary_%TestNameLogs%.log
-grep "DiscoDataResponse Received" %LogFolder%\TestRun.log | grep "value" | wc -l >> %LogFolder%\Summary_%TestNameLogs%.log
+echo --- Responses --- >> %LogFolderSub%\Summary_%TestNameLogs%.log
+echo | set /p="DiscoScheduleResponses with scheduleIds:	" >> %LogFolderSub%\Summary_%TestNameLogs%.log
+grep "DiscoScheduleResponse Received" %LogFolderSub%\TestRun.log | grep -v "\"scheduleId\": \"\"" | wc -l >> %LogFolderSub%\Summary_%TestNameLogs%.log
+echo | set /p="DiscoGetSchedulesResponses with scheduleIds:	" >> %LogFolderSub%\Summary_%TestNameLogs%.log
+grep "DiscoGetSchedulesResponse Received" %LogFolderSub%\TestRun.log | grep -v "\"scheduleIds\": \[ \]" | wc -l >> %LogFolderSub%\Summary_%TestNameLogs%.log
+echo | set /p="DiscoDataResponses with values:	" >> %LogFolderSub%\Summary_%TestNameLogs%.log
+grep "DiscoDataResponse Received" %LogFolderSub%\TestRun.log | grep "value" | wc -l >> %LogFolderSub%\Summary_%TestNameLogs%.log
 
-echo -- BAD_REQUEST / HARD_LIMIT / Warnings / Errors --- >> %LogFolder%\Summary_%TestNameLogs%.log
-echo | set /p="TestRun.log BAD_REQUEST|HARD_LIMIT:	" >> %LogFolder%\Summary_%TestNameLogs%.log
-grep -E -c "BAD_REQUEST|HARD_LIMIT" %LogFolder%\TestRun_Warnings-Errors.log >> %LogFolder%\Summary_%TestNameLogs%.log
-echo | set /p="TestRun.log Warnings, Errors:	" >> %LogFolder%\Summary_%TestNameLogs%.log
-grep -Ev -c "BAD_REQUEST|HARD_LIMIT" %LogFolder%\TestRun_Warnings-Errors.log >> %LogFolder%\Summary_%TestNameLogs%.log
-echo | set /p="disco-service.log Warnings, Errors:	" >> %LogFolder%\Summary_%TestNameLogs%.log
-grep -E -c "Warning|Error|warn|fail|crit"  %LogFolder%\disco-service_Warnings-Errors.log   >> %LogFolder%\Summary_%TestNameLogs%.log
-echo | set /p="siemens-adapter.log Warnings, Errors:	" >> %LogFolder%\Summary_%TestNameLogs%.log
-grep -E -c "Warning|Error|warn|fail|crit"  %LogFolder%\siemens-adapter_Warnings-Errors.log >> %LogFolder%\Summary_%TestNameLogs%.log
-echo. >> %LogFolder%\Summary_%TestNameLogs%.log
-echo ----------------------------------------------------------------------- >> %LogFolder%\Summary_%TestNameLogs%.log
-grep "End" %LogFolder%\start-end_date-time.log | tail -1 >> %LogFolder%\Summary_%TestNameLogs%.log
-echo Summary for Test: %TestNameLogs% Created Successfully: %LogFolder%\Summary_%TestNameLogs%.log
+echo -- BAD_REQUEST / HARD_LIMIT / Warnings / Errors --- >> %LogFolderSub%\Summary_%TestNameLogs%.log
+echo | set /p="TestRun.log BAD_REQUEST|HARD_LIMIT:	" >> %LogFolderSub%\Summary_%TestNameLogs%.log
+grep -E -c "BAD_REQUEST|HARD_LIMIT" %LogFolderSub%\TestRun_Warnings-Errors.log >> %LogFolderSub%\Summary_%TestNameLogs%.log
+echo | set /p="TestRun.log Warnings, Errors:	" >> %LogFolderSub%\Summary_%TestNameLogs%.log
+grep -Ev -c "BAD_REQUEST|HARD_LIMIT" %LogFolderSub%\TestRun_Warnings-Errors.log >> %LogFolderSub%\Summary_%TestNameLogs%.log
+echo | set /p="disco-service.log Warnings, Errors:	" >> %LogFolderSub%\Summary_%TestNameLogs%.log
+grep -E -c "Warning|Error|warn|fail|crit"  %LogFolderMain%\disco-service_%DateHourLast%_Warnings-Errors.log   >> %LogFolderSub%\Summary_%TestNameLogs%.log
+echo | set /p="siemens-adapter.log Warnings, Errors:	" >> %LogFolderSub%\Summary_%TestNameLogs%.log
+grep -E -c "Warning|Error|warn|fail|crit"  %LogFolderMain%\siemens-adapter_%DateHourLast%_Warnings-Errors.log >> %LogFolderSub%\Summary_%TestNameLogs%.log
+
+echo ----------------------------------------------------------------------- >> %LogFolderSub%\Summary_%TestNameLogs%.log
+grep "End" %LogFolderSub%\start-end_date-time.log | tail -1 >> %LogFolderSub%\Summary_%TestNameLogs%.log
+echo Summary for Test: %TestNameLogs% Created Successfully: %LogFolderSub%\Summary_%TestNameLogs%.log
