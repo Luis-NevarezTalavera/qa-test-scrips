@@ -11,7 +11,7 @@ for /l %%j in (%startHour%,1,%endHour%) do (
 
     for /l %%i in (1,1,%clientsQty%) do (
         echo re-creating error logs, summaries for disco-test-client-%%i %testDate%_%%j
-        call logs-get_summary.bat %TestName% disco-test-client-%%i %testDate%_%%j
+        call logs-get_summary.bat %TestName% %testDate%_%%j disco-test-client-%%i
     )
 
 )
