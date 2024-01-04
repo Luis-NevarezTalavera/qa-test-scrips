@@ -1,8 +1,8 @@
 echo off
 echo +++--- Creating Test Clients qty: %1, Starting from: %2 ---+++
 cd C:\ABS\TestClient\LoadTest\
-set startClient=%2
 set clientsQty=%1
+set startClient=%2
 set /a "endClient=startClient+clientsQty-1"
 
 echo Creating test-client-xx folders, qty: %1\
