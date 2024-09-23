@@ -1,0 +1,1 @@
+az storage blob list --account-name stccvesonblobqa --container-name prtr --auth-mode login
