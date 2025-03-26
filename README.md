@@ -1,7 +1,7 @@
 # qa-test-scrips
 The Scripts in this folder will facilitate the Installation, Configuration and Testing (functional / load) of CC-Disco and CC-Adapters-Siemens projects
 
-the qa-test-scripts relly on linux tools like grep, awk, wc, sed, these tools can be installed on windows using the open source git client, do a custom installation and enable the tools option
+The qa-test-scripts relly on linux tools like grep, awk, wc, sed, these tools can be installed on windows using the open source git client, do a custom installation and enable the tools option
 https://git-scm.com/downloads
 
 
@@ -24,7 +24,7 @@ loadtest-create_test-clients-queues.bat     creates the rabbit-mq test-client-x 
 loadtest-start.bat                  starts LoadTest for [arg-1-qty] test-clients for a [arg-2-requests-folder] 
 loadtest-execute_test-client.bat    called by batch above
 
-logs_check-errors.bat       extract errors from cc-disco, siemens-adapter and TestRun logs, created Warning-Errors.log file
+logs_check-errors.bat       extract errors from cc-disco, siemens-adapter and TestRun logs, creates Warning-Errors.log file
 logs_get-summary.bat        called by loadtest-start, creates a Summary report for each test-client-x
 
 logs_compare.bat            compares 2 Log files, replace-timestamps should be called first
